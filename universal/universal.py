@@ -25,7 +25,7 @@ import os
 import sys
 import subprocess
 import shutil
-from universal.ansi import Fore, Back, Style;
+from ansi import Fore, Back, Style;
 from argparse import ArgumentParser
 
 BLACK = '\033[30m'
@@ -43,7 +43,7 @@ def helpFun():
     #print( "# # # # # # # # # # # # # # # # # # # # # # # # # # # #"
     print( "    #######################################################")
     print( "    #        + + + ",Fore.YELLOW,"Universal Compiler Help",\
-            Fore.RESET," + + +      (c) #",sep='')
+            Fore.RESET," + + +      (c) #", sep='')
     print( "    #                                                     #")
     print( "    # Aliases: '",GREEN,"universal",RESET,"' and '",GREEN,"u",\
             RESET,"' and '",GREEN,"c",RESET,"'                #",sep='')

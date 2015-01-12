@@ -28,6 +28,7 @@ import pyinotify
 import re
 import subprocess
 import sys
+from universal import build_and_run_file
 
 class PatternAction(argparse.Action):
     def __call__(self, parser, namespace, values, option_string=None):
@@ -42,7 +43,7 @@ class Reload (Exception):
 class Process(pyinotify.ProcessEvent):
     def __init__(self,  options):
         self.regex = re.compile(options.regex)
-        self.script = options.script
+        #self.script = options.script
 
     def process_IN_CREATE(self, event):
         target = os.path.join(event.path, event.name)
@@ -55,10 +56,11 @@ class Process(pyinotify.ProcessEvent):
     def process_IN_CLOSE_WRITE(self, event):
         target = os.path.join(event.path, event.name)
         if self.regex.match(target):
-            args = self.script.replace('$f', target).split()
-            #os.system("clear")
-            sys.stdout.write("executing script: " + " ".join(args) + "\n")
-            subprocess.call(args)
+            ## args = self.script.replace('$f', target).split()
+            ## #os.system("clear")
+            ## sys.stdout.write("executing script: " + " ".join(args) + "\n")
+            ## subprocess.call(args)
+            build_and_run_file(target)
             sys.stdout.write("------------------------\n")
 
 def main():
@@ -69,7 +71,7 @@ def main():
     group.add_argument('-r', '--regex', required=False, default=".*", help='files only trigger the reaction if their name matches this regular expression')
     group.add_argument('-p', '--pattern', required=False, dest="regex", action=PatternAction, help='files only trigger the reaction if their name matches this shell pattern')
 
-    parser.add_argument("script", help="the script that is executed upon reaction")
+    # parser.add_argument("script", help="the script that is executed upon reaction")
 
     options = Options()
     args = parser.parse_args(namespace=options)
